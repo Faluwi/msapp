@@ -16,7 +16,7 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject('dev') {
-                            sh "echo ${project}
+                            sh "echo ${openshift.project"
                     }
                 }
                 sh "echo 'Deploy done.'"
