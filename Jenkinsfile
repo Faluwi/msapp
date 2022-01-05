@@ -1,25 +1,37 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('CICD') {
             steps {
-                sh "echo 'Build done.'"
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject('') {
+                            echo "Using Project: ${openshift.project()}"
+                        }
+                    }
+                }
             }
         }
-        stage('Test') {
-            steps {
-                sh "echo 'Test done.'"
-            }
-        }
-        stage('Deploy') {
+        stage('DEV') {
             steps {
                 script {
                     openshift.withCluster() {
                         openshift.withProject('dev') {
-                            sh "echo ${openshift.project"
+                            echo "Using Project: ${openshift.project()}"
+                        }
                     }
                 }
-                sh "echo 'Deploy done.'"
+            }
+        }
+        stage('PROD') {
+            steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject('prod') {
+                            echo "Using Project: ${openshift.project()}"
+                        }
+                    }
+                }
             }
         }
     }
