@@ -13,6 +13,12 @@ pipeline {
         }
         stage('Deploy') {
             steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject('dev') {
+                            sh "echo ${project}
+                    }
+                }
                 sh "echo 'Deploy done.'"
             }
         }
